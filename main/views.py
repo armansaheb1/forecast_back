@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 import openai
 import os
 # Create your views here.
+# os.environ['OPENAI_API_KEY'] = 
 class GBuilderFile(APIView):
 
     def post(self, request):
