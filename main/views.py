@@ -9,9 +9,8 @@ import json
 ROOT = "http://10.45.190.255:8000/media/"
 
 # Create your views here.
-os.environ["OPENAI_API_KEY"] = (
-    "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"
-)
+# os.environ["OPENAI_API_KEY"] = (
+# )
 
 
 class GBuilderFile(APIView):
