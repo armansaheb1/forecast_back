@@ -11,7 +11,7 @@ from decouple import config
 from openai import OpenAI
 from . import models
 from .serializers import FileSerializer, CoffeeReadingResponseSerializer, TarotCardSerializer
-from .language_utils import get_user_language, get_language_prompts, get_continuation_question_prompt, SUPPORTED_LANGUAGES
+from .language_utils import get_user_language, get_language_prompts, get_continuation_question_prompt, SUPPORTED_LANGUAGES, LANGUAGE_PROMPTS
 
 logger = logging.getLogger('main')
 
@@ -442,11 +442,15 @@ class HoroscopeView(APIView):
             
             # Get language from request if provided
             request_language = request.data.get('language')
+            logger.info(f"Horoscope request - received language: {request_language}, type: {type(request_language)}")
+            logger.info(f"Horoscope request - all request.data keys: {list(request.data.keys())}")
             if request_language and request_language in SUPPORTED_LANGUAGES:
                 user_language = request_language
+                logger.info(f"Using provided language: {user_language}")
             else:
                 user = request.user if request.user.is_authenticated else None
                 user_language = get_user_language(user, request)
+                logger.info(f"Using fallback language: {user_language} (request_language was: {request_language}, in SUPPORTED_LANGUAGES: {request_language in SUPPORTED_LANGUAGES if request_language else False})")
             
             prompts = get_language_prompts(user_language)
             
@@ -481,16 +485,24 @@ Relationship Status: {profile_data.get('relationship_status', '') if profile_dat
             
             # Call OpenAI API
             try:
+                # Build system prompt for horoscope in the selected language
+                system_prompt = f"You are a professional fortune teller and astrologer. You provide detailed, personalized horoscope readings based on astrological signs and planetary positions. Be warm, empathetic, and provide actionable insights. Write in {user_language} language."
+                
+                # Build user prompt in the selected language
+                user_prompt = f"""{profile_info}
+
+Please provide a detailed horoscope reading for this person based on their profile information. Write in {user_language} language. Be warm, empathetic, and provide actionable insights."""
+                
                 completion = openai_client.chat.completions.create(
                     model="gpt-4o-mini",
                     messages=[
                         {
                             "role": "system",
-                            "content": prompts['system'] if 'system' in prompts else "You are a professional fortune teller and astrologer.",
+                            "content": system_prompt,
                         },
                         {
                             "role": "user",
-                            "content": f"{profile_info}\n\nPlease provide a detailed horoscope reading for this person based on their profile information.",
+                            "content": user_prompt,
                         },
                     ],
                 )
@@ -510,11 +522,18 @@ Relationship Status: {profile_data.get('relationship_status', '') if profile_dat
                         'Hey sweetie, wanna know the love secrets I saw in your horoscope?',
                         'Tell me, you wanna know what your stars are saying about money?',
                         'You wanna know how your career future is gonna be?'
+                    ],
+                    'hi': [
+                        'अरे प्यारी, क्या आप जानना चाहती हैं कि मैंने आपकी कुंडली में प्रेम के रहस्य क्या देखे?',
+                        'बताइए, क्या आप जानना चाहती हैं कि आपके सितारे पैसे के बारे में क्या कह रहे हैं?',
+                        'क्या आप जानना चाहती हैं कि आपका करियर भविष्य कैसा होगा?'
                     ]
                 }
                 
                 try:
                     question_prompts = get_continuation_question_prompt(user_language)
+                    # Adapt the prompt for horoscope (replace "coffee reading" with "horoscope reading")
+                    user_prompt_text = question_prompts['user'].replace('coffee reading', 'horoscope reading').replace('कॉफी कप', 'कुंडली').replace('فنجان القهوة', 'الطالع').replace('kahve falı', 'burç yorumu').replace('café', 'horóscopo').replace('caffè', 'oroscopo').replace('кофейной чашки', 'гороскопа').replace('café', 'horóscopo')
                     question_completion = openai_client.chat.completions.create(
                         model="gpt-4o-mini",
                         messages=[
@@ -524,7 +543,7 @@ Relationship Status: {profile_data.get('relationship_status', '') if profile_dat
                             },
                             {
                                 "role": "user",
-                                "content": f"{question_prompts['user']}\n\nHoroscope Reading:\n{result}",
+                                "content": f"{user_prompt_text}\n\nHoroscope Reading:\n{result}",
                             },
                         ],
                     )
