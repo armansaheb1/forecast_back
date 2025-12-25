@@ -1,4 +1,11 @@
 debug.log
+*.log
 /env/
 /media/
 /static/
+.env
+*.pyc
+__pycache__/
+*.db
+*.sqlite3
+.DS_Store

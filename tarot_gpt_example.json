@@ -1,0 +1,74 @@
+{
+  "example_request_to_gpt": {
+    "model": "gpt-4o",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a professional Tarot card reader. You always respond with valid JSON format."
+      },
+      {
+        "role": "user",
+        "content": "You are a professional Tarot card reader. Based on the following information, provide a complete Tarot reading with individual card interpretations and an overall reading.\n\nProfile Information:\nName: Sarah\nAge: 28\nGender: female\nJob Status: employed\nRelationship Status: single\nCity: Tehran\nCountry: Iran\n\nCards Drawn:\nCard 1: The Fool (Major Arcana) - Position: Upright - Base Meaning: New beginnings, innocence, spontaneity, a free spirit\nCard 2: The Lovers (Major Arcana) - Position: Reversed - Base Meaning: Disharmony, imbalance, misalignment of values\nCard 3: Three of Cups (Minor Arcana) - Position: Upright - Base Meaning: Friendship, community, gatherings, celebrations\n\nPlease provide a complete Tarot reading in JSON format with the following structure:\n{\n  \"individual_interpretations\": [\n    {\n      \"card_id\": 1,\n      \"card_name\": \"The Fool\",\n      \"is_reversed\": false,\n      \"interpretation\": \"Detailed personalized interpretation for this card considering the querent's profile, card position, and life situation. Write in fa language. Be warm, empathetic, and provide actionable insights.\"\n    },\n    ... (one object for each card)\n  ],\n  \"overall_reading\": \"A comprehensive overall reading that synthesizes all cards together, considers the querent's profile, provides guidance on how cards relate to each other, offers actionable insights, and addresses the overall message. Write in fa language. Be warm, empathetic, and provide a complete narrative.\"\n}\n\nRequirements:\n1. For each card, provide a detailed, personalized interpretation considering:\n   - The querent's profile (age, gender, job status, relationship status)\n   - The card's position (upright or reversed)\n   - How this card relates to their current life situation\n   - Specific guidance and insights\n\n2. For the overall reading:\n   - Synthesize all cards together to tell a cohesive story\n   - Consider the querent's profile and life situation\n   - Provide guidance on how the cards relate to each other\n   - Offer actionable insights and advice\n   - Address the overall message the cards are conveying\n\n3. Write everything in fa language\n4. Be warm, empathetic, and provide actionable insights\n5. Return ONLY valid JSON, no additional text before or after\n\nReturn the JSON response now:"
+      }
+    ],
+    "response_format": {
+      "type": "json_object"
+    }
+  },
+  "example_json_response_from_gpt": {
+    "individual_interpretations": [
+      {
+        "card_id": 1,
+        "card_name": "The Fool",
+        "is_reversed": false,
+        "interpretation": "عزیزم سارا، کارت احمق برای تو که 28 ساله‌ای و در تهران زندگی می‌کنی، پیام زیبایی داره. این کارت نشون میده که تو در آستانه یک شروع جدید هستی. با توجه به اینکه مجردی و شاغلی، این کارت می‌گه که وقتش رسیده که با شجاعت و بی‌پروایی به سمت تجربیات جدید بری. شاید در کار یا روابط عاطفی‌ات فرصت‌های جدیدی پیش رویته که باید با ذهن باز و قلب آماده به استقبالشون بری. نترس از تغییرات، چون این کارت می‌گه که تو در مسیر درستی هستی و کائنات از تو حمایت می‌کنن."
+      },
+      {
+        "card_id": 6,
+        "card_name": "The Lovers",
+        "is_reversed": true,
+        "interpretation": "سارا عزیز، کارت عشاق به صورت وارونه برای تو که مجردی و 28 ساله‌ای، می‌گه که شاید در حال حاضر در روابط عاطفی‌ات یا در انتخاب‌های مهم زندگیت یک عدم تعادل وجود داره. این کارت نشون میده که ممکنه بین خواسته‌های قلبت و منطقت یک تضاد وجود داشته باشه. شاید در کار یا روابط شخصی‌ات نیاز به یک بازنگری داری. این کارت می‌خواد بهت بگه که قبل از تصمیم‌گیری‌های مهم، باید با خودت صادق باشی و ببینی که واقعاً چی می‌خوای. وقتش رسیده که ارزش‌های واقعی‌ات رو شناسایی کنی و بر اساس اونها عمل کنی."
+      },
+      {
+        "card_id": 43,
+        "card_name": "Three of Cups",
+        "is_reversed": false,
+        "interpretation": "عزیزم، کارت سه جام برای تو که در تهران زندگی می‌کنی و شاغلی، خبر خوبی داره. این کارت نشون میده که در آینده نزدیک، دوستی‌ها و روابط اجتماعی‌ات تقویت می‌شن. شاید در محل کار یا در جمع دوستان‌ت فرصت‌هایی برای جشن و شادی پیش بیاد. این کارت می‌گه که تو نیاز داری که بیشتر با اطرافیانت ارتباط برقرار کنی و از حمایت و انرژی مثبت دوستان‌ت استفاده کنی. شاید از طریق این روابط اجتماعی، فرصت‌های جدیدی برایت پیش بیاد که می‌تونه در زندگی شخصی یا حرفه‌ای‌ات تأثیر مثبت بذاره."
+      }
+    ],
+    "overall_reading": "سارا عزیز، فال تو یک داستان زیبا و امیدوارکننده رو برات تعریف می‌کنه. کارت‌هایت نشون می‌دن که تو در یک نقطه عطف مهمی از زندگیت قرار داری.\n\nکارت احمق بهت می‌گه که آماده شروع یک فصل جدیدی از زندگیت باشی. با توجه به اینکه 28 ساله‌ای و در تهران زندگی می‌کنی، این کارت نشون میده که فرصت‌های جدیدی پیش رویته که باید با شجاعت و ذهن باز به استقبالشون بری. نترس از تغییرات، چون تو در مسیر درستی هستی.\n\nاما کارت عشاق به صورت وارونه بهت هشدار می‌ده که قبل از تصمیم‌گیری‌های مهم، باید با خودت صادق باشی. شاید در حال حاضر بین خواسته‌های قلبت و منطقت یک تضاد وجود داره. این کارت می‌خواد بهت بگه که وقتش رسیده که ارزش‌های واقعی‌ات رو شناسایی کنی و بر اساس اونها عمل کنی.\n\nکارت سه جام خبر خوبی برات داره. این کارت نشون میده که در آینده نزدیک، دوستی‌ها و روابط اجتماعی‌ات تقویت می‌شن و شاید از طریق این روابط، فرصت‌های جدیدی برایت پیش بیاد.\n\nدر کل، فال تو می‌گه که تو در آستانه یک شروع جدیدی هستی، اما قبل از اینکه به جلو بری، باید با خودت صادق باشی و ببینی که واقعاً چی می‌خوای. روابط اجتماعی‌ات می‌تونه در این مسیر بهت کمک کنه. با شجاعت و اعتماد به نفس به جلو برو، چون کائنات از تو حمایت می‌کنن."
+  },
+  "api_response_structure": {
+    "cards": [
+      {
+        "id": 1,
+        "name": "احمق",
+        "name_en": "The Fool",
+        "translated_name": "احمق",
+        "suit": "major",
+        "number": 0,
+        "image_url": "https://askveyra.xyz/media/tarot_cards/fool.jpg",
+        "meaning": "New beginnings, innocence, spontaneity",
+        "reversed_meaning": "Recklessness, risk-taking, naivety",
+        "emoji": "🃏",
+        "order": 0
+      }
+    ],
+    "individual_interpretations": [
+      {
+        "card_id": 1,
+        "card_name": "احمق",
+        "is_reversed": false,
+        "interpretation": "عزیزم سارا، کارت احمق برای تو که 28 ساله‌ای..."
+      }
+    ],
+    "overall_reading": "سارا عزیز، فال تو یک داستان زیبا و امیدوارکننده رو برات تعریف می‌کنه..."
+  }
+}
+
+
+
+
+
+
+

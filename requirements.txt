@@ -5,3 +5,5 @@ djoser
 pillow
 gunicorn
 openai
+python-decouple
+drf-spectacular
